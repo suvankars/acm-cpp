@@ -1,7 +1,11 @@
 #include <iostream>
 #include <stdlib.h> 
+#include <sstream>
+#include <vector>
+
 
 using std::string;
+using std::getline;
 
 const int upper_limit = 10000;
 const int lower_limit = 0;
@@ -36,17 +40,30 @@ void usages(){
 	exit (EXIT_FAILURE);
 }
 
-int main() {
-	int begining;
-	int end;
+int main(int argv, char* argc[]){
 	
+	std::cout << "Please enter input pair, seperated by space: " <<std::endl;
+	string line;
+	while ( std::getline(std::cin, line)){
+			
+		string buf; // Have a buffer string
+    	std::stringstream ss(line); // Insert the string into a stream
+    	std::vector<string> tokens; // Create vector to hold input range
 
-	std::cout << "Please enter input pair, seperated by space: ";
-	std::cin >> begining >> end ;
-	if (begining - lower_limit <= upper_limit - lower_limit){
-		usages();
+    	while (ss >> buf){
+    		tokens.push_back(buf);
+     	   
+    	}
+    	int begining = atoi( tokens[0].c_str() );
+    	int end = atoi( tokens[1].c_str() );
+    	
+		// if (begining - lower_limit <= upper_limit - lower_limit){
+		// 	usages();
+		// }
+
+
+		std::cout << begining << " " << end << " " <<max_cycle_length(begining, end) << std::endl;
 	}
 
-	std::cout << begining << " " << end << " " <<max_cycle_length(begining, end) << std::endl;
 	return 0;
 }
