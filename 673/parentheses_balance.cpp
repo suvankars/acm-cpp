@@ -1,8 +1,7 @@
 #include <iostream>
-#include <sstream>
 #include <vector>
 #include <map>
-
+#include <algorithm>
 #include <stack>
 
 using namespace std;
@@ -23,28 +22,23 @@ std::string isBalanced(std::string parentheses_str){
 
   for(std::vector<char>::size_type i = 0; i != parentheses.size(); i++  ){
     if ((parentheses[i] == opening_brace1) || (parentheses[i] == opening_brace2) ){
-      std::cout << " going to push " << parentheses[i] << std::endl;
       matcher.push(parentheses[i]);
     }
     else if ((parentheses[i] == closing_brace1) || (parentheses[i] == closing_brace2)){
-       std::cout << " going to pop " << parentheses[i] << std::endl;
       char top_elm;
       if(!matcher.empty()){
         top_elm = matcher.top();
-      }
+
         if(brace_pair[top_elm] == parentheses[i]){
-          std::cout << " going to remove " << parentheses[i] << std::endl;
-          if(!matcher.empty()){
-            matcher.pop();
-          }
+          matcher.pop();
+        }
         else{
-          std::cout << "push remaining elements " << parentheses[i] << std::endl;
           matcher.push(parentheses[i]);
         }
-
       }
-
-
+      else{
+        matcher.push(parentheses[i]);
+      }
     }
 
   }
@@ -59,9 +53,14 @@ std::string isBalanced(std::string parentheses_str){
 }
 
 int main() {
-  std::string parentheses_str = "(([()])))";
-  std::cout << isBalanced(parentheses_str) << std::endl;
-  std::string parentheses_str2 = "([()[]()])()";
-  std::cout << isBalanced(parentheses_str2) << std::endl;
+  std::string nCases;
+  std::string nCasesq;
+  std::string line;
+  
+  std::getline(std::cin, nCases);
+  for(int i = 0 ; i < std::atoi( nCases.c_str()) ; i++ ){
+	std::getline(std::cin, line);
+    std::cout << isBalanced(line) << std::endl;
+  }
   return 0;
 }
