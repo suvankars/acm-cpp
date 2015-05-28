@@ -17,20 +17,22 @@ std::map<char, char> mapper(std::string substitution, std::string plaintext){
 }
 
 std::string cypher(std::map<char, char> cypher_map, std::string article){
-	std::string cyphered_text;
-  for(std::map<char, char>::iterator it = cypher_map.begin(); it != cypher_map.end(); ++it ){
-    char plaintext = it->first;
-    char substitution = it->second;
-    std::replace( article.begin(), article.end(), plaintext, substitution);
-	cyphered_text = article ;
-  }
+  std::map<char,char>::iterator it;
+   for(size_t i = 0; i < article.length(); i++){
+     it = cypher_map.find(article[i]);
+     char value = it->second;
+     if((value)){
+       article[i] = value;
+     }
+   }
 
+  std::string cyphered_text = article;
   return cyphered_text;
 }
 
 int main() {
-	
-  std::string nCases;	
+
+  std::string nCases;
   std::string line;
   std::string plaintext;
   std::string substitution;
@@ -58,8 +60,8 @@ int main() {
 
   cypher_map = mapper(substitution, plaintext);
   cyphered_text = cypher(cypher_map, article.str());
-  std::cout << "substitution :"<< substitution << std::endl;
-  std::cout << "plaintext :"<< plaintext << std::endl;
-   std::cout << cyphered_text << std::endl;
+  std::cout << substitution << std::endl;
+  std::cout << plaintext << std::endl;
+  std::cout << cyphered_text << std::endl;
   return 0;
 }
